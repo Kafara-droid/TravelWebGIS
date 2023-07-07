@@ -1,0 +1,130 @@
+<html lang="id">
+    <head>
+      <title>JRG - Leaflet Geocontrols</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <meta name="author" content="penulis" />
+      <meta name="description" content="deskripsi halaman" />
+      <meta name="robots" content="index,follow" />
+      <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+      <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+      <link rel="preconnect" href="https://fonts.gstatic.com">
+      <link href="https://fonts.googleapis.com/css2?family=Inconsolata&display=swap" rel="stylesheet">
+    
+      <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+        }
+        #map {
+            height: 100%;
+            width: 100%;
+            border-radius: 15px;
+        }
+      </style>
+      <script>
+        var map, point1, point2, point3, point4, point5; // deklarasi variabel peta Leaflet dasar
+        var osm, esri, terrain;         // deklarasi variabel peta Leaflet dengan kontrol
+        var controlCapas, controlEscala;
+    
+        function init () {      // fungsi init
+            map = L.map("map",      // instansiasi objek peta
+            {center:[-6.9326, 106.9275], // koordinat Sukabumi
+            zoom:12});
+            
+            // objek instansiasi untuk BASEMAP
+            esri = L.tileLayer(
+                'http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', 
+                {
+                maxZoom: 19,
+                minZoom: 1,
+                attribution: 'Tiles © Esri'
+                }
+            ).addTo(map);
+    
+            osm = L.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",        // instansiasi objek layer
+                {   
+                maxZoom: 19,
+                minZoom: 1,
+                Attribution: "OSM",
+                }
+            ).addTo(map);
+            
+            // objek instansiasi untuk OVERLAY
+            terrain = L.tileLayer('http://{s}.tile.stamen.com/terrain-background/{z}/{x}/{y}.png', 
+                {
+                maxZoom: 19,
+                attribution: 'Stamen terrain',
+                opacity: 0.5,
+                }).addTo(map);
+    
+            // parameter
+            var baseMaps = {
+                "ESRI Ortho": esri,
+                "OpenStreetMap":osm
+            };
+    
+            var overlayMaps = {
+                "Terrain (Stamen)": terrain,
+            }
+    
+            controlCapas = L.control.layers(baseMaps, overlayMaps, {collapsed:true}).addTo(map);
+    
+            controlEscala = L.control.scale().addTo(map);
+    
+            point1 = L.marker([-6.920, 106.926]);      // deklarasi marker sederhana
+            point2 = L.marker([-6.930, 106.925]);
+           
+            point3 = L.circleMarker([-6.923, 106.935],{        // deklarasi marker bundar 
+            color: '#ffffff',       
+            fillColor: '#00ff00',
+            fillOpacity: 0.9,
+            radius: 10
+            });
+            
+            point4 = L.circleMarker([-6.933, 106.936],
+            {
+                color: '#ffffff',       
+            fillColor: '#00ff00',
+            fillOpacity: 0.9,
+            radius: 10
+            });
+          
+           point5 = L.circleMarker([-6.939, 106.933],
+            {
+                color: '#ffffff',       
+            fillColor: '#00ff00',
+            fillOpacity: 0.9,
+            radius: 10
+            });
+           
+            point1.addTo(map).bindPopup('Pusat Kota Sukabumi'); // menambahkan marker ke peta
+            point2.addTo(map).bindPopup('Situ Gunung');
+            point3.addTo(map).bindPopup('Stasiun Kereta Sukabumi');
+            point4.addTo(map).bindPopup('Pelabuhan dan Marina Sukabumi');
+            point5.addTo(map).bindPopup('Bandara Sukabumi');
+        };
+    </script>
+    </head>
+    
+    <body onLoad="init()">
+        <div class="container">
+            <nav class="navbar navbar-light bg-light">
+                <div>
+                <h2>Peta Leaflet - geocontrols</h2>
+                
+                    <p>Sebuah peta Leaflet sederhana dengan beberapa peta dasar dan peta tambahan</p>
+                </div>
+                <div>
+                    <ul class="breadcrumb">
+                        <li><a href="index.html">Halaman Utama</a></li>
+                    </ul>
+                </div>
+            </nav>
+        <div id="map">
+    
+        </div>
+    </body>
+</html>    

@@ -1,0 +1,95 @@
+<html lang="id">
+    <head>
+        <title>JRG - Peta Dasar Leaflet</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="author" content="penulis" />
+        <meta name="description" content="deskripsi halaman">
+        <meta name="robots" content="index,follow">
+    <!-- Leaflet.js CDN-->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+    <!-- Bootstrap CDN-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+
+    <!-- Styles -->
+    <link href="https://fonts.googleapis.com/css2?family=Inconsolata&display=swap" rel="stylesheet">
+    <style>
+        body {
+          margin: 0;
+          padding: 0;
+          overflow: visible;
+        }
+        #map {
+          height: 100%;
+          width: 100%;
+          border-radius: 15px;
+        }
+    </style>
+    <script>
+        var map, capa1, controlCapas, point1, point2, point3, point4, point5; //deklarasi variabel
+        function init () {      //fungsi init
+            map = L.map("map",      //instansiasi objek peta
+            {center:[-6.9237, 106.9256], //koordinat Sukabumi
+            zoom:12});
+            
+            capa1 = L.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",        //instansiasi objek layer
+            {maxZoom: 19,
+                minZoom: 1,
+                attribution: '&copy; <a href="http://www.openstreetmap.org/copyright"/>OpenStreetMap</a>'
+            });
+            
+            controlCapas = L.control.scale().addTo(map);
+
+            point1 = L.marker([-6.9278, 106.9308]);      //deklarasi marker sederhana
+            point2 = L.marker([-6.9226, 106.9251]);
+           
+            point3 = L.circleMarker([-6.9292, 106.9343],{        //deklarasi marker berbentuk lingkaran 
+            color: '#ffffff',       
+            fillColor: '#00ff00',
+            fillOpacity: 0.9,
+            radius: 10
+            });
+            
+            point4 = L.circleMarker([-6.9373, 106.9717],
+            {
+                color: '#ffffff',       
+            fillColor: '#00ff00',
+            fillOpacity: 0.9,
+            radius: 10
+            });
+          
+           point5 = L.circleMarker([-6.9087, 106.9143],
+            {
+                color: '#ffffff',       
+            fillColor: '#00ff00',
+            fillOpacity: 0.9,
+            radius: 10
+            });
+            capa1.addTo(map); //menambahkan layer ke peta
+            
+            point1.addTo(map).bindPopup('Pusat Kota Sukabumi'); //menambahkan titik ke peta
+            point2.addTo(map).bindPopup('Situ Gunung');
+            point3.addTo(map).bindPopup('Stasiun Kereta Sukabumi');
+            point4.addTo(map).bindPopup('Pelabuhan dan Marina Sukabumi');
+            point5.addTo(map).bindPopup('Bandara Sukabumi');
+        };
+    </script>
+</head>
+<body onLoad="init()">
+    <div class="container">
+        <nav class="navbar navbar-light bg-light">
+            <div>
+                <h2>Peta Dasar Leaflet</h2>
+                <p>Sebuah peta sederhana dengan penanda yang dibuat menggunakan Leaflet.js</p>
+            </div>
+            <div>
+                <ul class="breadcrumb">
+                    <li><a href="index.html">Main Page</a></li>
+                </ul>
+            </div>
+        </nav>
+    <div id="map"></div>
+</body>
